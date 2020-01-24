@@ -1,11 +1,13 @@
 <template>
   <v-card class="elevation-0">
     <v-toolbar
-      card
+      flat
       dense
       color="transparent"
     >
-      <v-toolbar-title><h4>Notification</h4></v-toolbar-title>
+      <v-toolbar-title class="font-weight-light">
+        Notification
+      </v-toolbar-title>
     </v-toolbar>
     <v-divider />
     <v-card-text class="pa-0">
@@ -24,30 +26,30 @@
             v-else-if="item.divider"
             :key="index"
           />
-          <v-list-tile
+          <v-list-item
             v-else
             :key="item.title"
             avatar
             @click="handleClick"
           >
-            <v-list-tile-avatar :color="item.color">
+            <v-list-item-avatar :color="item.color">
               <v-icon dark>
                 {{ item.icon }}
               </v-icon>
-            </v-list-tile-avatar>
-            <v-list-tile-content>
-              <v-list-tile-sub-title v-text="item.title" />
-            </v-list-tile-content>
-            <v-list-tile-action class="caption">
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <v-list-item-subtitle v-text="item.title" />
+            </v-list-item-content>
+            <v-list-item-action class="caption">
               {{ item.timeLabel }}
-            </v-list-tile-action>
-          </v-list-tile>
+            </v-list-item-action>
+          </v-list-item>
         </template>
       </v-list>
       <v-divider />
       <v-btn
         block
-        flat
+        text
         class="ma-0"
       >
         All

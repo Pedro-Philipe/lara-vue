@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-toolbar
-      card
+      flat
       prominent
       extended
       color="primary"
@@ -24,23 +24,23 @@
         v-model="valid"
         lazy-validation
       >
-        <v-layout
+        <v-row
           row
           wrap
         >
-          <v-flex
-            lg12
-            sm12
+          <v-col
+            lg="12"
+            sm="12"
           >
             <v-text-field
               v-model="title"
               label="Title"
               name="title"
             />
-          </v-flex>
-          <v-flex
-            sm6
-            lg6
+          </v-col>
+          <v-col
+            sm="6"
+            lg="6"
           >
             <v-menu
               ref="statDate"
@@ -69,14 +69,14 @@
               >
                 <v-spacer />
                 <v-btn
-                  flat
+                  text
                   color="primary"
                   @click="startDateMenu = false"
                 >
                   Cancel
                 </v-btn>
                 <v-btn
-                  flat
+                  text
                   color="primary"
                   @click="$refs.statDate.save(startDate)"
                 >
@@ -84,10 +84,10 @@
                 </v-btn>
               </v-date-picker>
             </v-menu>
-          </v-flex>
-          <v-flex
-            sm6
-            lg6
+          </v-col>
+          <v-col
+            sm="6"
+            lg="6"
           >
             <v-menu
               ref="startTime"
@@ -111,14 +111,14 @@
               <v-time-picker v-model="startTime">
                 <v-spacer />
                 <v-btn
-                  flat
+                  text
                   color="primary"
                   @click="startTimeMenu = false"
                 >
                   Cancel
                 </v-btn>
                 <v-btn
-                  flat
+                  text
                   color="primary"
                   @click="$refs.startTime.save(startTime)"
                 >
@@ -126,10 +126,10 @@
                 </v-btn>
               </v-time-picker>
             </v-menu>
-          </v-flex>
-          <v-flex
-            sm6
-            lg6
+          </v-col>
+          <v-col
+            sm="6"
+            lg="6"
           >
             <v-menu
               ref="endDate"
@@ -158,14 +158,14 @@
               >
                 <v-spacer />
                 <v-btn
-                  flat
+                  text
                   color="primary"
                   @click="endDateMenu = false"
                 >
                   Cancel
                 </v-btn>
                 <v-btn
-                  flat
+                  text
                   color="primary"
                   @click="$refs.endDate.save(endDate)"
                 >
@@ -173,10 +173,10 @@
                 </v-btn>
               </v-date-picker>
             </v-menu>
-          </v-flex>
-          <v-flex
-            sm6
-            lg6
+          </v-col>
+          <v-col
+            sm="6"
+            lg="6"
           >
             <v-menu
               ref="endTime"
@@ -200,14 +200,14 @@
               <v-time-picker v-model="endTime">
                 <v-spacer />
                 <v-btn
-                  flat
+                  text
                   color="primary"
                   @click="endTimeMenu = false"
                 >
                   Cancel
                 </v-btn>
                 <v-btn
-                  flat
+                  text
                   color="primary"
                   @click="$refs.endTime.save(endTime)"
                 >
@@ -215,18 +215,18 @@
                 </v-btn>
               </v-time-picker>
             </v-menu>
-          </v-flex>
-          <v-flex
-            lg12
-            sm12
+          </v-col>
+          <v-col
+            lg="12"
+            sm="12"
           >
             <v-text-field
               textarea
               label="Description"
             />
-          </v-flex>
+          </v-col>
           <v-spacer />
-        </v-layout>
+        </v-row>
       </v-form>
     </v-card-text>
     <v-card-actions class="pb-3">

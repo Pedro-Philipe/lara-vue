@@ -60,7 +60,7 @@
     </v-card-text>
     <v-divider class="mt-5" />
     <v-card-actions>
-      <v-btn flat>
+      <v-btn text>
         Cancel
       </v-btn>
       <v-spacer />
@@ -82,7 +82,7 @@
       </v-slide-x-reverse-transition>
       <v-btn
         color="primary"
-        flat
+        text
         @click="submit"
       >
         Submit

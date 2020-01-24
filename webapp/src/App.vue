@@ -1,91 +1,105 @@
 <template>
-  <div class="app-root">
+  <v-app>
     <router-view />
-    <!-- theme setting -->
-    <v-btn
-      small
-      fab
-      dark
-      falt
+
+    <!-- theme setting drawer -->
+    <v-navigation-drawer
+      :value="themeDrawerGetter"
+      class="setting-drawer"
+      temporary
+      right
+      hide-overlay
       fixed
-      top="top"
-      right="right"
-      class="setting-fab"
-      color="red"
-      @click="openThemeSettings"
+      @input="toggleDrawerThemeAction($event)"
     >
-      <v-icon>settings</v-icon>
-    </v-btn>
-    <!-- setting drawer -->
+      <theme-settings />
+    </v-navigation-drawer>
 
     <!-- global snackbar -->
     <v-snackbar
+      :value="snackbar.show"
+      :color="snackbar.color"
       bottom
       right
-      :color="snackbar.color"
-      :value="snackbar.show"
     >
       {{ snackbar.text }}
       <v-btn
         dark
-        flat
+        text
         icon
         @click.native="snackbar.show = false"
       >
         <v-icon>close</v-icon>
       </v-btn>
     </v-snackbar>
-  </div>
+
+    <!-- global modal confirm -->
+    <dialog-confirmacao ref="confirm" />
+
+    <dialog-ajuda ref="ajuda" />
+  </v-app>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import ThemeSettings from '@/core/components/ThemeSettings';
+import DialogConfirmacao from '@/core/components/dialog/DialogConfirmacao';
+import DialogAjuda from '@/core/components/dialog/DialogAjuda';
 import { eventHub } from './event';
-
 
 export default {
   components: {
+    DialogConfirmacao,
     ThemeSettings,
+    DialogAjuda,
   },
   data() {
     return {
-      rightDrawer: false,
+      snackbar: {
+        show: false,
+        color: 'success',
+        text: '',
+      },
     };
   },
   computed: {
     ...mapGetters({
-      snackbar: 'app/snackbar',
+      snackbarGetter: 'app/snackbar',
+      themeDrawerGetter: 'app/themeDrawer',
     }),
   },
-  created() {
+  watch: {
+    snackbarGetter(val) {
+      this.snackbar = Object.assign({}, val);
+    },
+  },
+  mounted() {
     const self = this;
-    this.$vuetify.theme.primary = '#3f51b5';
+    /**
+     * Event Bus - Criado para emitir mensagem de erro fora dos componentes Vue
+     * Basta importar o arquivo event da raiz do projeto
+     * Para utilizar: eventHub.$emit('eventoErro', 'Mensagem!');
+     */
     eventHub.$on('eventoErro', (payload) => {
       self.notificarErro(payload);
     });
-    eventHub.$on('eventoSucesso', (payload) => {
-      self.notificarSucesso(payload);
-    });
+
+    this.$root.$confirm = this.$refs.confirm.open;
+    this.$root.$dialogAjuda = this.$refs.ajuda.open;
   },
   methods: {
     ...mapActions({
       notificarErro: 'app/setMensagemErro',
-      notificarSucesso: 'app/setMensagemSucesso',
+      toggleDrawerThemeAction: 'app/toggleDrawerTheme',
     }),
-    openThemeSettings() {
-      this.$vuetify.goTo(0);
-      this.rightDrawer = !this.rightDrawer;
-    },
   },
 };
 </script>
 
 <style scoped>
-.setting-fab {
-  top: 50% !important;
-  right: 0;
-  border-radius: 0;
-  display: none;
-}
+  .setting-fab {
+    top: 50% !important;
+    right: 0;
+    border-radius: 0;
+  }
 </style>

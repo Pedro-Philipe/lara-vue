@@ -1,11 +1,13 @@
 <template>
   <v-card>
     <v-toolbar
-      card
+      flat
       dense
       color="transparent"
     >
-      <v-toolbar-title><h4>Project</h4></v-toolbar-title>
+      <v-toolbar-title class="font-weight-light">
+        Project
+      </v-toolbar-title>
       <v-spacer />
       <v-btn icon>
         <v-icon>more_vert</v-icon>
@@ -17,7 +19,7 @@
         <v-data-table
           :headers="headers"
           :items="projects"
-          hide-actions
+          hide-default-footer
           class="elevation-0"
         >
           <template
@@ -33,26 +35,26 @@
               </v-avatar>
             </td>
             <td>{{ props.item.name }}</td>
-            <td class="text-xs-left">
+            <td class="text-left">
               {{ props.item.deadline }}
             </td>
-            <td class="text-xs-left">
+            <td class="text-left">
               <v-progress-linear
                 :value="props.item.progress"
                 height="5"
                 :color="props.item.color"
               />
             </td>
-            <td class="text-xs-right">
+            <td class="text-right">
               <v-btn
-                flat
+                text
                 icon
                 color="grey"
               >
                 <v-icon>edit</v-icon>
               </v-btn>
               <v-btn
-                flat
+                text
                 icon
                 color="grey"
               >

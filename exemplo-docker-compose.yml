@@ -2,17 +2,17 @@ version: '3.5'
 services:
   database-service:
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U votacultura -d votacultura || exit 1"]
+      test: ["CMD-SHELL", "pg_isready -U paacomprainstitucional -d paacomprainstitucional || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 3
-    image: postgres:10
-    container_name: votacultura-database
+    image: postgres:12
+    container_name: paacomprainstitucional-database
     environment:
-    - POSTGRES_PASSWORD=senhavotacultura
-    - POSTGRES_USER=votacultura
-    - POSTGRES_DB=votacultura
-    - POSTGRES_DB_TEST=votacultura-test
+    - POSTGRES_PASSWORD=senhapaacomprainstitucional
+    - POSTGRES_USER=paacomprainstitucional
+    - POSTGRES_DB=paacomprainstitucional
+    - POSTGRES_DB_TEST=paacomprainstitucional-test
     ports:
     - "5433:5432"
     expose:
@@ -21,11 +21,11 @@ services:
     - ./database/docker-data/postgres:/var/lib/postgresql/data
     - ./database/:/docker-entrypoint-initdb.d/
     networks:
-    - votacultura_network
+    - paacomprainstitucional_network
   webapp-service:
     #    build: ./webapp
     image: node:10
-    container_name: votacultura-web
+    container_name: paacomprainstitucional-web
     #user: "node"
     user: "root"
     working_dir: /home/node/app
@@ -47,12 +47,12 @@ services:
     environment:
     - NODE_ENV=development
     networks:
-    - votacultura_network
+    - paacomprainstitucional_network
 
   api-service:
-    container_name: votacultura-api
+    container_name: paacomprainstitucional-api
     build: ./api
-    image: cidadania/votacultura-php-fpm:1.2.1
+    image: cidadania/paacomprainstitucional-php-fpm:1.2.1
     working_dir: /application
     volumes:
     - ./api:/application
@@ -66,7 +66,7 @@ services:
     # CONTAINER:ALIAS
     restart: on-failure
     networks:
-    - votacultura_network
+    - paacomprainstitucional_network
 
   webserver-service:
     build:
@@ -74,8 +74,8 @@ services:
       dockerfile: WebserverDockerfile
       args:
         EXPOSE_PORT: 80
-    image: cidadania/votacultura-webserver-nginx:1.0.0
-    container_name: votacultura-webserver
+    image: cidadania/paacomprainstitucional-webserver-nginx:1.0.0
+    container_name: paacomprainstitucional-webserver
     working_dir: /application
     volumes:
     - ./api:/application
@@ -85,11 +85,11 @@ services:
     depends_on:
     - api-service
     networks:
-    - votacultura_network
+    - paacomprainstitucional_network
 
   webapp-webserver-service:
-    image: nginx:1.17-alpine
-    container_name: votacultura-webapp-webserver
+    image: nginx:1.17
+    container_name: paacomprainstitucional-webapp-webserver
     #    working_dir: /usr/share/nginx/html
     volumes:
     - ./webapp/dist:/usr/share/nginx/html
@@ -99,14 +99,9 @@ services:
     links:
     - webserver-service
     networks:
-    - votacultura_network
-
-# http://localhost > builded webapp
-# http://localhost/api/localidade/uf >
-
-# docker network create votacultura_network
+    - paacomprainstitucional_network
 
 networks:
-  votacultura_network:
-    name: votacultura_network
+  paacomprainstitucional_network:
+    name: paacomprainstitucional_network
     driver: bridge

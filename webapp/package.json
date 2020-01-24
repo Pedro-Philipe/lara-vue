@@ -1,5 +1,5 @@
 {
-  "name": "VotaCultura",
+  "name": "paacomprainstitucional",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -11,8 +11,6 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "@ckeditor/ckeditor5-build-classic": "^15.0.0",
-    "@ckeditor/ckeditor5-vue": "^1.0.0",
     "axios": "^0.19.0",
     "core-js": "^2.6.5",
     "filepond": "^4.4.11",
@@ -21,17 +19,19 @@
     "filepond-plugin-file-validate-type": "^1.2.4",
     "filepond-plugin-image-preview": "^4.2.1",
     "jsonwebtoken": "^8.5.1",
-    "material-design-icons-iconfont": "^3.0.3",
+    "material-design-icons-iconfont": "^5.0.1",
     "nprogress": "^0.2.0",
     "register-service-worker": "^1.6.2",
     "roboto-fontface": "*",
     "vue": "^2.6.10",
     "vue-filepond": "^5.1.2",
-    "vue-perfect-scrollbar": "^0.1.0",
+    "vue-i18n": "^8.15.0",
+    "vue-json-excel": "^0.2.98",
+    "vue-perfect-scrollbar": "^0.2.0",
     "vue-router": "^3.0.3",
-    "vuetify": "^1.5.5",
-    "vuex": "^3.0.1",
-    "vuex-router-sync": "^5.0.0"
+    "vue-the-mask": "^0.11.1",
+    "vuetify": "^2.2.5",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.9.0",
@@ -45,12 +45,17 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
+    "deepmerge": "^4.0.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "fibers": "^4.0.1",
+    "sass": "^1.22.10",
+    "sass-loader": "^7.3.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
-    "vue-cli-plugin-vuetify": "^0.5.0",
+    "vue-cli-plugin-vuetify": "^0.6.3",
     "vue-template-compiler": "^2.6.10",
-    "vuetify-loader": "^1.0.5"
+    "vuetify-loader": "^1.2.2",
+    "vue2-editor": "^2.10.2"
   }
 }

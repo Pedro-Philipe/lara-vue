@@ -45,7 +45,7 @@
 
               <v-tabs-items v-model="dadosPrimeiroAcesso.tp_inscricao">
                 <v-tab-item value="organizacao">
-                  <v-card flat>
+                  <v-card text>
                     <v-card-text>
                       <v-text-field
                         v-model="dadosPrimeiroAcesso.nu_cnpj"
@@ -68,7 +68,7 @@
                   </v-card>
                 </v-tab-item>
                 <v-tab-item value="conselho">
-                  <v-card flat>
+                  <v-card text>
                     <v-card-text>
                       <v-text-field
                         v-model="dadosPrimeiroAcesso.nu_cnpj"
@@ -91,7 +91,7 @@
                   </v-card>
                 </v-tab-item>
                 <v-tab-item value="eleitor">
-                  <v-card flat>
+                  <v-card text>
                     <v-card-text>
                       <v-text-field
                         v-model="dadosPrimeiroAcesso.nu_cpf"

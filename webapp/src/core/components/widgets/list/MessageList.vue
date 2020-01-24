@@ -1,11 +1,13 @@
 <template>
   <v-card>
     <v-toolbar
-      card
+      flat
       dense
       color="transparent"
     >
-      <v-toolbar-title><h4>Message</h4></v-toolbar-title>
+      <v-toolbar-title class="font-weight-light">
+        Message
+      </v-toolbar-title>
     </v-toolbar>
     <v-divider />
     <v-card-text class="pa-0">
@@ -24,26 +26,26 @@
             v-else-if="item.divider"
             :key="index"
           />
-          <v-list-tile
+          <v-list-item
             v-else
             :key="item.title"
             avatar
             @click="handleClick"
           >
-            <v-list-tile-avatar>
+            <v-list-item-avatar>
               <img :src="item.avatar">
-            </v-list-tile-avatar>
-            <v-list-tile-content>
-              <v-list-tile-title v-text="item.title" />
-              <v-list-tile-sub-title v-text="item.subtitle" />
-            </v-list-tile-content>
-          </v-list-tile>
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <v-list-item-title v-text="item.title" />
+              <v-list-item-subtitle v-text="item.subtitle" />
+            </v-list-item-content>
+          </v-list-item>
         </template>
       </v-list>
       <v-divider />
       <v-btn
         block
-        flat
+        text
         class="ma-0"
       >
         All

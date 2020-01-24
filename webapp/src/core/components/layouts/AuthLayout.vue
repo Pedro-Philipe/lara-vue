@@ -5,15 +5,15 @@
         fluid
         fill-height
       >
-        <v-layout
-          align-center
-          justify-center
+        <v-row
+          align="center"
+          justify="center"
         >
-          <v-flex
-            xs12
-            sm8
-            md6
-            lg6
+          <v-col
+            xs="12"
+            sm="8"
+            md="4"
+            lg="4"
           >
             <v-slide-y-reverse-transition
               leave-absolute
@@ -21,8 +21,8 @@
             >
               <router-view :key="$route.path" />
             </v-slide-y-reverse-transition>
-          </v-flex>
-        </v-layout>
+          </v-col>
+        </v-row>
       </v-container>
     </v-content>
   </v-app>
@@ -36,14 +36,13 @@ export default {
   methods: {},
 };
 </script>
-<style scoped lang="css">
-.split-bg {
-  height: 50%;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  content: "";
-  z-index: 0;
-}
+<style scoped lang="sass">
+.split-bg
+  height: 50%
+  width: 100%
+  position: absolute
+  top: 0
+  left: 0
+  content: ""
+  z-index: 0
 </style>

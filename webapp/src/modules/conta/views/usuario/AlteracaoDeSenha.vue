@@ -3,16 +3,16 @@
     grid-list-xl
     fluid
   >
-    <v-layout
+    <v-row
       row
       wrap
     >
-      <v-flex lg6>
+      <v-col lg="6">
         <v-card class="mb-4">
           <v-toolbar
             color="primary"
             dark
-            flat
+            text
             dense
             cad
           >
@@ -28,13 +28,13 @@
               v-model="valid"
               lazy-validation
             >
-              <v-layout
+              <v-row
                 row
                 wrap
               >
-                <v-flex
-                  lg12
-                  sm12
+                <v-col
+                  lg="12"
+                  sm="12"
                 >
                   <v-text-field
                     id="senha_atual"
@@ -46,15 +46,15 @@
                     :rules="[rules.required, rules.minCaracter, rules.senhaValida]"
                     @click:append="mostrarSenha = !mostrarSenha"
                   />
-                </v-flex>
-              </v-layout>
-              <v-layout
+                </v-col>
+              </v-row>
+              <v-row
                 row
                 wrap
               >
-                <v-flex
-                  lg12
-                  sm12
+                <v-col
+                  lg="12"
+                  sm="12"
                 >
                   <v-text-field
                     id="senha"
@@ -66,15 +66,15 @@
                     :rules="[rules.required, rules.minCaracter, rules.senhaValida]"
                     @click:append="mostrarSenha = !mostrarSenha"
                   />
-                </v-flex>
-              </v-layout>
-              <v-layout
+                </v-col>
+              </v-row>
+              <v-row
                 row
                 wrap
               >
-                <v-flex
-                  lg12
-                  sm12
+                <v-col
+                  lg="12"
+                  sm="12"
                 >
                   <v-text-field
                     id="confirma_senha"
@@ -86,8 +86,8 @@
                     :rules="[rules.required, rules.confirmaSenha(confirma_senha, usuario.ds_senha)]"
                     @click:append="mostrarSenha = !mostrarSenha"
                   />
-                </v-flex>
-              </v-layout>
+                </v-col>
+              </v-row>
               <v-spacer />
             </v-form>
           </v-card-text>
@@ -104,8 +104,8 @@
             </v-btn>
           </v-card-actions>
         </v-card>
-      </v-flex>
-    </v-layout>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 

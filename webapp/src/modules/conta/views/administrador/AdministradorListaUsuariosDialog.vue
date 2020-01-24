@@ -40,14 +40,14 @@
                   grid-list-md
                   text-xs-center
                 >
-                  <v-layout
+                  <v-row
                     row
                     wrap
                   >
-                    <v-flex
-                      xs4
-                      md4
-                      sm12
+                    <v-col
+                      xs="4"
+                      md="4"
+                      sm="12"
                     >
                       <v-text-field
                         v-model="formulario.nu_cpf"
@@ -59,11 +59,11 @@
                         required
                         :disabled="!!formulario.hasOwnProperty('co_usuario')"
                       />
-                    </v-flex>
-                    <v-flex
-                      xs8
-                      md8
-                      sm12
+                    </v-col>
+                    <v-col
+                      xs="8"
+                      md="8"
+                      sm="12"
                     >
                       <v-text-field
                         v-model="nmPessoaFisica"
@@ -74,11 +74,11 @@
                         :rules="[rules.cpfInvalido]"
                         required
                       />
-                    </v-flex>
-                    <v-flex
-                      xs6
-                      md6
-                      sm12
+                    </v-col>
+                    <v-col
+                      xs="6"
+                      md="6"
+                      sm="12"
                     >
                       <v-text-field
                         v-model="formulario.ds_email"
@@ -89,11 +89,11 @@
                         maxlength="80"
                         :rules="[rules.required, rules.emailValido]"
                       />
-                    </v-flex>
-                    <v-flex
-                      xs4
-                      md4
-                      sm12
+                    </v-col>
+                    <v-col
+                      xs="4"
+                      md="4"
+                      sm="12"
                     >
                       <v-select
                         v-model="formulario.perfil.co_perfil"
@@ -109,10 +109,10 @@
                         validate-on-blur
                       />
 
-                    </v-flex>
-                    <v-flex
-                      xs12
-                      sm4
+                    </v-col>
+                    <v-col
+                      xs="12"
+                      sm="4"
                     >
                       <v-switch
                         v-model="formulario.st_ativo"
@@ -122,8 +122,8 @@
                           !!formulario.ds_codigo_ativacao"
                         color="primary"
                       />
-                    </v-flex>
-                  </v-layout>
+                    </v-col>
+                  </v-row>
                 </v-container>
               </v-form>
             </v-card-text>

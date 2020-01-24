@@ -2,6 +2,7 @@
   <v-fab-transition>
     <v-btn
       v-show="fab"
+      v-scroll="onScroll"
       fab="fab"
       small
       dark="dark"
@@ -29,10 +30,9 @@ export default {
       if (typeof window === 'undefined') return;
 
       const top = window.pageYOffset || document.documentElement.offsetTop || 0;
-      this.fab = top > 300;
+      this.fab = top > 20;
     },
     toTop() {
-      this.$router.push({ hash: '' });
       this.$vuetify.goTo(0);
     },
   },

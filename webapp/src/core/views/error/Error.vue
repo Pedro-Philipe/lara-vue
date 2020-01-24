@@ -4,10 +4,9 @@
       fluid
       fill-height
     >
-      <v-layout
-        align-center
-        justify-center
-        row
+      <v-row
+        align="center"
+        justify="center"
       >
         <div class="mr-3 hidden-sm-and-down">
           <img
@@ -18,7 +17,7 @@
         <div class="text-md-center">
           <h1>500</h1>
           <h2 class="my-3 headline">
-            Sorry, the server is down.
+            Desculpe, houve um erro no servidor.
           </h2>
           <div>
             <v-btn
@@ -29,7 +28,7 @@
             </v-btn>
           </div>
         </div>
-      </v-layout>
+      </v-row>
     </v-container>
   </v-app>
 </template>

@@ -74,14 +74,14 @@
     </div>
     <div class="form-btn">
       <v-btn
-        outline
+        outlined
         color="primary"
         @click="submit"
       >
         Submit
       </v-btn>
       <v-btn
-        outline
+        outlined
         @click="clear"
       >
         Clear

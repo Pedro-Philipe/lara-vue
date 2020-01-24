@@ -6,10 +6,9 @@
         color="transparent"
         flat
         dense
-        card
       >
-        <v-toolbar-title>
-          <h4>{{ title }}</h4>
+        <v-toolbar-title class="font-weight-light">
+          {{ title }}
         </v-toolbar-title>
         <v-spacer />
         <slot name="widget-header-action" />

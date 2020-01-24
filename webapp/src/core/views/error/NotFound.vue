@@ -4,11 +4,11 @@
       fluid
       fill-height
     >
-      <v-layout
-        align-center
-        justify-center
+      <v-row
+        align="center"
+        justify="center"
       >
-        <div class="text-md-center">
+        <div class="text-center">
           <h1>404</h1>
           <h2 class="my-3 headline">
             Desculpe, página não encontrada
@@ -22,7 +22,7 @@
             </v-btn>
           </div>
         </div>
-      </v-layout>
+      </v-row>
     </v-container>
   </v-app>
 </template>

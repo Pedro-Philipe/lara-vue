@@ -1,12 +1,14 @@
 <template>
   <v-navigation-drawer
-    :value="exibirGaveta"
-    class="app--drawer"
-    :mini-variant.sync="mini"
+    :value="primaryDrawerGetter.model && menuAppStatusGetter"
+    :clipped="primaryDrawerGetter.clipped"
+    :permanent="primaryDrawerGetter.type === 'permanent'"
+    :temporary="primaryDrawerGetter.type === 'temporary'"
+    :floating="primaryDrawerGetter.floating"
+    :mini-variant="primaryDrawerGetter.mini"
+    hide-overlay
     app
-    clipped
-    :width="drawWidth"
-    @input="$emit('input', $event)"
+    @input="toggleStatusPrimaryDrawer($event)"
   >
     <vue-perfect-scrollbar
       class="drawer-menu--scroll"
@@ -16,77 +18,71 @@
         dense
         expand
       >
-        <template v-for="item in menus">
+        <template v-for="item in menusGetter">
           <!--group with subitems-->
           <v-list-group
-            v-if="item.items"
-            :key="item.title"
-            :group="item.group"
-            :prepend-icon="item.icon"
+            v-if="item.filhas.length >= 1 && item.st_menu == true"
+            :key="item.no_funcionalidade"
+            :value="isActive(item)"
+            :prepend-icon="item.no_icone"
             no-action="no-action"
           >
-            <v-list-tile
-              slot="activator"
-              ripple="ripple"
-            >
-              <v-list-tile-content>
-                <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-              </v-list-tile-content>
-            </v-list-tile>
-            <template v-for="subItem in item.items">
+            <template v-slot:activator>
+              <v-list-item-content>
+                <v-list-item-title>{{ item.no_funcionalidade }}</v-list-item-title>
+              </v-list-item-content>
+            </template>
+            <template v-for="subItem in item.filhas">
               <!--sub group-->
               <v-list-group
-                v-if="subItem.items"
-                :key="subItem.name"
-                :group="subItem.group"
-                sub-group="sub-group"
+                v-if="subItem.filhas.length >= 1 && subItem.st_menu == true"
+                :key="subItem.no_funcionalidade"
+                sub-group
               >
-                <v-list-tile
-                  slot="activator"
-                  ripple="ripple"
-                >
-                  <v-list-tile-content>
-                    <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
-                  </v-list-tile-content>
-                </v-list-tile>
-                <v-list-tile
-                  v-for="grand in subItem.children"
-                  :key="grand.name"
-                  :to="obterRotaFilha(item, grand)"
+                <template v-slot:activator>
+                  <v-list-item-content>
+                    <v-list-item-title>{{ subItem.no_funcionalidade }}</v-list-item-title>
+                  </v-list-item-content>
+                </template>
+                <v-list-item
+                  v-for="grand in subItem.filhas"
+                  :key="grand.no_funcionalidade"
+                  :to="!grand.href ? {name: grand.no_rota} : null"
                   :href="grand.href"
-                  ripple="ripple"
+                  link
                 >
-                  <v-list-tile-content>
-                    <v-list-tile-title>{{ grand.title }}</v-list-tile-title>
-                  </v-list-tile-content>
-                </v-list-tile>
+                  <v-list-item-content>
+                    <v-list-item-title>{{ grand.no_funcionalidade }}</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
               </v-list-group>
               <!--child item-->
-              <v-list-tile
+              <v-list-item
                 v-else
-                :key="subItem.name"
-                :to="obterRotaFilha(item, subItem)"
+                :key="subItem.no_funcionalidade"
+                :to="!subItem.href ? {name: subItem.no_rota} : null"
                 :href="subItem.href"
                 :disabled="subItem.disabled"
                 :target="subItem.target"
-                ripple="ripple"
+                link
               >
-                <v-list-tile-content>
-                  <v-list-tile-title>
-                    <span>{{ subItem.title }}</span>
-                  </v-list-tile-title>
-                </v-list-tile-content>
-                <v-list-tile-action v-if="subItem.action">
+                <v-list-item-content>
+                  <v-list-item-title>
+                    <span>{{ subItem.no_funcionalidade }}</span>
+                  </v-list-item-title>
+                </v-list-item-content>
+                <v-list-item-action v-if="subItem.action">
                   <v-icon :class="[subItem.actionClass || 'success--text']">
                     {{ subItem.action }}
                   </v-icon>
-                </v-list-tile-action>
-              </v-list-tile>
+                </v-list-item-action>
+              </v-list-item>
             </template>
           </v-list-group>
           <v-subheader
             v-else-if="item.header"
             :key="item.name"
+            class="font-weight-bold"
           >
             {{ item.header }}
           </v-subheader>
@@ -95,333 +91,96 @@
             :key="item.name"
           />
           <!--top-level link-->
-          <v-list-tile
+          <v-list-item
             v-else
-            :key="item.name"
-            :to="!item.href ? { name: item.name } : null"
+            :key="item.no_funcionalidade"
+            :to="!item.href ? { name: item.no_rota } : null"
             :href="item.href"
-            ripple="ripple"
             :disabled="item.disabled"
             :target="item.target"
             rel="noopener"
+            link
           >
-            <v-list-tile-action v-if="item.icon">
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-            </v-list-tile-content>
-            <v-list-tile-action v-if="item.subAction">
+            <v-list-item-action v-if="item.no_icone">
+              <v-icon>{{ item.no_icone }}</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>{{ item.no_funcionalidade }}</v-list-item-title>
+            </v-list-item-content>
+            <v-list-item-action v-if="item.subAction">
               <v-icon class="success--text">
                 {{ item.subAction }}
               </v-icon>
-            </v-list-tile-action>
-          </v-list-tile>
+            </v-list-item-action>
+          </v-list-item>
         </template>
       </v-list>
     </vue-perfect-scrollbar>
   </v-navigation-drawer>
 </template>
 <script>
-import { mapActions, mapGetters } from 'vuex';
 import VuePerfectScrollbar from 'vue-perfect-scrollbar';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'AppDrawer',
   components: {
     VuePerfectScrollbar,
   },
-  props: {
-    value: {
-      type: Boolean,
-      default: true,
-    },
-    expanded: {
-      type: Boolean,
-      default: true,
-    },
-    drawWidth: {
-      type: [Number, String],
-      default: '300',
-    },
-  },
+
   data() {
     return {
-      mini: false,
-      menus: [],
+      menus: {},
       scrollSettings: {
         maxScrollbarLength: 160,
       },
-      exibirGaveta: false,
-      menuInscrivaseAtivo: false,
-      usuarioLogado: {},
-      menuAPI: [
-        {
-          title: 'Início',
-          group: 'apps',
-          icon: 'home',
-          name: 'Inicio',
-        },
-        {
-          title: 'Lista final de inscritos',
-          group: 'apps',
-          icon: 'list',
-          name: 'inscricao-lista-parcial-route',
-        },
-        {
-          title: 'Lista da etapa de habilitação',
-          group: 'apps',
-          icon: 'list',
-          name: 'inscricao-lista-parcial-habilitacao-route',
-        },
-        {
-          title: 'Votação',
-          group: 'apps',
-          icon: 'list',
-          name: 'votacao-route',
-        },
-        {
-          title: 'Lista final dos indicados',
-          group: 'apps',
-          icon: 'list',
-          name: 'inscricao-lista-parcial-indicados-route',
-        },
-        {
-          title: 'Resultado da votação',
-          group: 'apps',
-          icon: 'list',
-          name: 'resultado-votacao-route',
-        },
-        {
-            title: 'Resultado final - organizações',
-            group: 'apps',
-            icon: 'list',
-            name: 'OrganizacaoResultadoFinalIndicadosRoute',
-        },
-      ],
     };
   },
+
   computed: {
     ...mapGetters({
-      listaFinalRankingGetter: 'votacao/listaFinalRanking',
-      ativarInscricaoConselho: 'fase/ativarInscricaoConselho',
-      ativarInscricaoOrganizacao: 'fase/ativarInscricaoOrganizacao',
-      ativarInscricaoEleitor: 'fase/ativarInscricaoEleitor',
-      usuario: 'conta/usuario',
-      perfil: 'conta/perfil',
+      usuarioLogadoGetter: 'app/usuarioLogado',
+      menusGetter: 'app/menus',
+      menuAppStatusGetter: 'app/menuAppStatus',
+      primaryDrawerGetter: 'app/primaryDrawer',
     }),
-  },
-  watch: {
-    value(val) {
-      this.exibirGaveta = val;
-    },
-    usuario(valor) {
-      this.usuarioLogado = valor;
-    },
-    usuarioLogado() {
-      this.menus = this.menuAPI;
-      this.carregarMenusUsuarioLogado();
-    },
-    listaFinalRankingGetter(listaFinal) {
-      const jaExisteMenuPublicacaoResultadoFinal = this.menuAPI.find(
-        opcaoMenu => opcaoMenu.name === 'administrador-gerar-resultado-final-route',
-      );
-
-      if (!Object.keys(listaFinal).length && !jaExisteMenuPublicacaoResultadoFinal && this.perfil.no_perfil === 'administrador') {
-        this.definirItemMenu({
-          title: 'Publicar ranking final',
-          group: 'apps',
-          name: 'administrador-gerar-resultado-final-route',
-          icon: 'publish',
-        }, 'Administração');
-      }
-    },
-  },
-  mounted() {
-    this.obterFases();
-    this.usuarioLogado = this.usuario;
-    this.obterListaFinalRanking();
-  },
-  methods: {
-    ...mapActions({
-      obterListaFinalRanking: 'votacao/obterListaFinalRanking',
-      obterFases: 'fase/obterFases',
-    }),
-
-    carregarMenusUsuarioLogado() {
-      if (Object.keys(this.usuario).length < 1) {
-        return false;
-      }
-
-      this.carregarMenusConselho();
-      this.carregarMenusOrganizacao();
-      this.carregarMenusEleitor();
-      this.carregarMenuHabilitacao();
-      this.carregarMenuAdministrador();
-
+    computeGroupActive() {
       return true;
     },
-    carregarMenusEleitor() {
-      const grupoValidacoes = [
-        !!this.usuario.co_eleitor,
-        this.usuario.co_eleitor > 0,
-      ];
-      const souValido = grupoValidacoes.indexOf(false) === -1;
+    sideToolbarColor() {
+      return this.$vuetify.options.extra.sideNav;
+    },
+  },
 
-      if (souValido) {
-        this.definirItemMenu({
-          title: 'Detalhes da inscrição',
-          group: 'apps',
-          name: 'EleitorDetalhesInscricaoRoute',
-          icon: 'group',
-        }, 'Eleitor');
+  mounted() {
+    if (this.$vuetify.breakpoint.mdAndDown) {
+      this.setMenuAppStatus(false);
+    }
+  },
+
+  methods: {
+    ...mapActions({
+      setPrimaryDrawerStatus: 'app/setPrimaryDrawerStatus',
+      setMenuAppStatus: 'app/setMenuAppStatus',
+    }),
+    toggleStatusPrimaryDrawer(status) {
+      this.setPrimaryDrawerStatus(status);
+
+      if (status === false && this.$vuetify.breakpoint.mdAndDown) {
+        this.setMenuAppStatus(false);
       }
     },
-    carregarMenusConselho() {
-      const grupoValidacoes = [
-        !!this.usuario.co_conselho,
-        this.usuario.co_conselho > 0,
-      ];
-      const souValido = grupoValidacoes.indexOf(false) === -1;
-
-      if (souValido) {
-        this.definirItemMenu({
-          title: 'Detalhes da inscrição',
-          group: 'apps',
-          name: 'ConselhoDetalhesInscricaoRoute',
-          icon: 'group',
-        }, 'Conselho');
-        this.definirItemMenu({
-          title: 'Indicação',
-          group: 'apps',
-          name: 'ConselhoIndicacaoRoute',
-          icon: 'person_pin',
-        }, 'Conselho');
-      }
-    },
-    carregarMenusOrganizacao() {
-      const grupoValidacoes = [
-        !!this.usuario.co_organizacao,
-        this.usuario.co_organizacao > 0,
-      ];
-      const souValido = grupoValidacoes.indexOf(false) === -1;
-
-      if (souValido) {
-        this.definirItemMenu({
-          title: 'Detalhes da inscrição',
-          group: 'apps',
-          name: 'OrganizacaoDetalhesInscricaoRoute',
-          icon: 'group',
-        }, 'Organizacao');
-
-        this.definirItemMenu({
-          title: 'Recurso da habilitação',
-          group: 'apps',
-          name: 'OrganizacaoHabilitacaoRecursoRoute',
-          icon: 'gavel',
-        }, 'Organizacao');
-      }
-    },
-    carregarMenuAdministrador() {
-      if (this.perfil.no_perfil === 'administrador') {
-        this.definirItemMenu({
-          title: 'Usuários',
-          group: 'apps',
-          name: 'administrador-lista-usuarios-route',
-          icon: 'group',
-        }, 'Administração');
-
-        this.definirItemMenu({
-          title: 'Recursos',
-          group: 'apps',
-          name: 'lista-recurso-route',
-          icon: 'gavel',
-        }, 'Administração');
-
-        this.definirItemMenu({
-          title: 'Inscritos',
-          group: 'apps',
-          name: 'administrador-lista-inscritos-route',
-          icon: 'list',
-        }, 'Administração');
-        this.definirItemMenu({
-          title: 'Ranking parcial dos indicados',
-          group: 'apps',
-          name: 'administrador-ranking-indicados-route',
-          icon: 'list',
-        }, 'Administração');
-        this.definirItemMenu({
-          title: 'Indicados das organizações',
-          group: 'apps',
-          name: 'OrganizacaoIndicacaoRoute',
-          icon: 'person_pin',
-        }, 'Administração');
-      }
-    },
-    carregarMenuHabilitacao() {
-      const grupoValidacoes = [
-        this.perfil.no_perfil === 'administrador',
-        this.perfil.no_perfil === 'avaliador',
-      ];
-      const souValido = grupoValidacoes.indexOf(true) !== -1;
-      if (souValido) {
-        this.definirItemMenu({
-          title: 'Habilitação de organização',
-          group: 'apps',
-          name: 'OrganizacaoListaHabilitacaoRoute',
-          icon: 'list',
-        }, 'Habilitação');
-        this.definirItemMenu({
-          title: 'Habilitação de conselhos',
-          group: 'apps',
-          name: 'ConselhoListaHabilitacaoRoute',
-          icon: 'list',
-        }, 'Habilitação');
-        this.definirItemMenu({
-          title: 'Habilitação de indicados',
-          group: 'apps',
-          name: 'ConselhoIndicacaoHabilitacaoRoute',
-          icon: 'list',
-        }, 'Habilitação');
-        this.definirItemMenu({
-          title: 'Recurso da Habilitação',
-          group: 'apps',
-          name: 'AdministradorAvaliadorHabilitacaoRecursoRoute',
-          icon: 'gavel',
-        }, 'Recurso');
-
-        this.definirItemMenu({
-          title: 'Recurso da indicação',
-          group: 'apps',
-          name: 'ConselhoIndicacaoListaRecursoRoute',
-          icon: 'gavel',
-        }, 'Recurso');
-      }
-    },
-    definirItemMenu(objetoMenu, nomeAgrupador) {
-      this.definirAgrupadorMenu(nomeAgrupador);
-      this.menus.push(objetoMenu);
-    },
-    definirAgrupadorMenu(nomeAgrupador) {
-      const indiceAgrupadorInscricaoDeMenus = this.menus.findIndex(indice => indice.name === nomeAgrupador);
-      if (indiceAgrupadorInscricaoDeMenus === -1) {
-        this.menus.push({ header: nomeAgrupador, name: nomeAgrupador });
-      }
-    },
-    obterRotaFilha(item, subItem) {
-      if (subItem.href) {
-        return {};
-      }
-      let filho = { name: `${item.group}/${subItem.name}` };
-      if (subItem.component) {
-        filho = { name: subItem.component };
-      }
-      return filho;
+    isActive(item) {
+      return this.$route.path.split('/')[1] === item.no_grupo;
     },
   },
 };
 </script>
 
-<style lang="stylus" scoped>
-
+<style lang="sass" scoped>
+.app--drawer
+  overflow: hidden
+  .drawer-menu--scroll
+    height: calc(100% - 60px)
+    overflow: auto
 </style>

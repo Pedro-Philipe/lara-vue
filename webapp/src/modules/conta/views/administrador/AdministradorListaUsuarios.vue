@@ -4,11 +4,11 @@
       grid-list-xl
       fluid
     >
-      <v-layout
+      <v-row
         row
         wrap
       >
-        <v-flex lg12>
+        <v-col lg="12">
           <v-card>
             <v-card-title>
               <v-btn
@@ -82,8 +82,8 @@
               />
             </v-card-text>
           </v-card>
-        </v-flex>
-      </v-layout>
+        </v-col>
+      </v-row>
     </v-container>
   </div>
 </template>

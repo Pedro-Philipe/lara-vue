@@ -1,11 +1,13 @@
 <template>
   <v-card>
     <v-toolbar
-      card
+      flat
       dense
       color="transparent"
     >
-      <v-toolbar-title><h4>Order</h4></v-toolbar-title>
+      <v-toolbar-title class="font-weight-light">
+        Order
+      </v-toolbar-title>
       <v-spacer />
       <v-btn icon>
         <v-icon>more_vert</v-icon>
@@ -17,7 +19,7 @@
         <v-data-table
           :headers="headers"
           :items="items"
-          hide-actions
+          hide-default-footer
           class="elevation-0 table-striped"
         >
           <template
@@ -25,13 +27,13 @@
             slot-scope="props"
           >
             <td>{{ props.item.id }}</td>
-            <td class="text-xs-left">
+            <td class="text-left">
               {{ props.item.product }}
             </td>
-            <td class="text-xs-left">
+            <td class="text-left">
               {{ props.item.price }}
             </td>
-            <td class="text-xs-left">
+            <td class="text-left">
               <v-chip
                 label
                 small

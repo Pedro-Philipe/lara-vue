@@ -7,8 +7,5 @@ export const state = {
   perfis: [],
   tokenUsuario: String(),
   perfisInscricao: [
-    'conselho',
-    'organizacao',
-    'eleitor',
   ],
 };

@@ -18,10 +18,6 @@ export default [
           title: 'Autenticar',
           public: true,
         },
-        // beforeEnter: (to, from, next) => {
-        //   console.log('to');
-        //   console.log('from');
-        // },
         component: () => import(/* webpackChunkName: "conta-autenticar" */ '@/modules/conta/views/Login.vue'),
       },
       {

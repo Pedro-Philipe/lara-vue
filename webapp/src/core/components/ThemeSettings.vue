@@ -1,86 +1,98 @@
 <template>
-  <!--<div class="themeSetting">-->
-    <!--<v-toolbar color="blue">-->
-      <!--<v-toolbar-title>Theme Settings</v-toolbar-title>-->
-    <!--</v-toolbar>-->
-    <!--<v-container>-->
-      <!--<v-layout column>-->
-        <!--<v-flex>-->
-          <!--<v-subheader class="px-1 my-2">-->
-            <!--Color Option-->
-          <!--</v-subheader>-->
-          <!--<div class="color-option">-->
-            <!--<v-layout wrap>-->
-              <!--<label-->
-                <!--v-for="(option, index) in themeColorOptions"-->
-                <!--:key="index"-->
-                <!--class="color-option&#45;&#45;label flex xs6 pa-1"-->
-              <!--&gt;-->
-                <!--<input-->
-                  <!--v-model="themeColor"-->
-                  <!--type="radio"-->
-                  <!--name="color"-->
-                  <!--:value="option.key"-->
-                <!--&gt;-->
-                <!--<span class="color-option&#45;&#45;item bg">-->
-                  <!--<span class="overlay">-->
-                    <!--<span class="material-icons">check</span>-->
-                  <!--</span>-->
-                  <!--<span-->
-                    <!--class="color-option&#45;&#45;item&#45;&#45;header sideNav"-->
-                    <!--:class="option.value.sideNav"-->
-                  <!--/>-->
-                  <!--<span-->
-                    <!--class="color-option&#45;&#45;item&#45;&#45;header mainNav"-->
-                    <!--:class="option.value.mainNav"-->
-                  <!--/>-->
-                  <!--<span-->
-                    <!--class="sideMenu"-->
-                    <!--:class="option.value.sideMenu"-->
-                  <!--/>-->
-                <!--</span>-->
-              <!--</label>-->
-            <!--</v-layout>-->
-          <!--</div>-->
-          <!--<div class="theme-options">-->
-            <!--<v-subheader class="px-1 my-2">-->
-              <!--Sidebar Option-->
-            <!--</v-subheader>-->
-            <!--<v-divider />-->
-            <!--<div class="my-3">-->
-              <!--<v-btn-toggle v-model="sideBarOption">-->
-                <!--<v-btn-->
-                  <!--flat-->
-                  <!--value="dark"-->
-                <!--&gt;-->
-                  <!--Dark-->
-                <!--</v-btn>-->
-                <!--<v-btn-->
-                  <!--flat-->
-                  <!--value="light"-->
-                <!--&gt;-->
-                  <!--Light-->
-                <!--</v-btn>-->
-              <!--</v-btn-toggle>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</v-flex>-->
-      <!--</v-layout>-->
-    <!--</v-container>-->
-  <!--</div>-->
+  <div class="themeSetting">
+    <v-toolbar
+      dark
+      color="primary"
+    >
+      <v-toolbar-title>Configurações do Tema</v-toolbar-title>
+    </v-toolbar>
+    <v-container>
+      <div class="theme-options">
+        <v-subheader class="px-1 my-2">
+          Modo noturno
+        </v-subheader>
+        <v-divider />
+        <div class="my-3">
+          <v-btn-toggle
+            :value="theme.mode"
+            @change="setModoDoTemaAction($event)"
+          >
+            <v-btn
+              text
+              value="dark"
+            >
+              Dark
+            </v-btn>
+            <v-btn
+              text
+              value="light"
+            >
+              Light
+            </v-btn>
+          </v-btn-toggle>
+        </div>
+      </div>
+      <v-row column>
+        <v-col>
+          <v-subheader class="px-1 my-2">
+            Opções de cores
+          </v-subheader>
+          <div class="color-option">
+            <v-row wrap>
+              <label
+                v-for="(option, index) in themeColorOptions"
+                :key="index"
+                :for="index"
+                class="color-option--label flex xs6 pa-1"
+              >
+                <input
+                  :id="index"
+                  v-model="themeColor"
+                  type="radio"
+                  name="color"
+                  :value="option.key"
+                  @input="alterarCor($event.target.value)"
+                >
+                <span class="color-option--item bg">
+                  <span class="overlay">
+                    <span class="material-icons">check</span>
+                  </span>
+                  <span
+                    class="color-option--item--header sideNav"
+                    :class="option.value.sideNav"
+                  />
+                  <span
+                    class="color-option--item--header mainNav"
+                    :class="option.value.mainNav"
+                  />
+                  <span
+                    class="sideMenu"
+                    :class="option.value.sideMenu"
+                  />
+                </span>
+              </label>
+            </v-row>
+          </div>
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
 </template>
 <script>
 import colors from 'vuetify/es5/util/colors';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   data() {
     return {
-      themeColor: 'indigo',
-      sideBarOption: 'light',
       colors,
+      themeColor: 'indigo',
     };
   },
   computed: {
+    ...mapGetters({
+      theme: 'app/theme',
+    }),
     themeColorOptions() {
       return [
         {
@@ -91,21 +103,99 @@ export default {
             sideMenu: 'white',
           },
         },
+        {
+          key: 'teal',
+          value: {
+            sideNav: 'teal',
+            mainNav: 'teal',
+            sideMenu: 'white',
+          },
+        },
+        {
+          key: 'red',
+          value: {
+            sideNav: 'red',
+            mainNav: 'red',
+            sideMenu: 'white',
+          },
+        },
+        {
+          key: 'orange',
+          value: {
+            sideNav: 'orange',
+            mainNav: 'orange',
+            sideMenu: 'white',
+          },
+        },
+        {
+          key: 'purple',
+          value: {
+            sideNav: 'purple',
+            mainNav: 'purple',
+            sideMenu: 'white',
+          },
+        },
+        {
+          key: 'indigo',
+          value: {
+            sideNav: 'indigo',
+            mainNav: 'indigo',
+            sideMenu: 'white',
+          },
+        },
+        {
+          key: 'cyan',
+          value: {
+            sideNav: 'cyan',
+            mainNav: 'cyan',
+            sideMenu: 'white',
+          },
+        },
+        {
+          key: 'pink',
+          value: {
+            sideNav: 'pink',
+            mainNav: 'pink',
+            sideMenu: 'white',
+          },
+        },
+        {
+          key: 'green',
+          value: {
+            sideNav: 'green',
+            mainNav: 'green',
+            sideMenu: 'white',
+          },
+        },
       ];
     },
   },
   watch: {
-    themeColor: {
-      handler(val) {
-        this.$vuetify.theme.primary = '#3f51b5';
+    theme: {
+      handler(tema) {
+        this.atualizarTema(tema);
       },
-      immediate: true,
+      deep: true,
     },
-    sideBarOption: {
-      handler(val) {
-        this.$vuetify.dark = val === 'dark';
-      },
-      immediate: true,
+  },
+  created() {
+    this.syncTemaLocalStorageAction();
+    this.atualizarTema(this.theme);
+  },
+  methods: {
+    ...mapActions({
+      setModoDoTemaAction: 'app/setModoDoTema',
+      setCorDoTemaAction: 'app/setCorDoTema',
+      syncTemaLocalStorageAction: 'app/syncTemaLocalStorage',
+    }),
+    alterarCor(cor) {
+      this.setCorDoTemaAction(cor);
+    },
+    atualizarTema(tema) {
+      this.themeColor = this.theme.color;
+      this.$vuetify.theme.themes.light.primary = this.colors[tema.color].base;
+      this.$vuetify.theme.themes.dark.primary = this.colors[tema.color].base;
+      this.$vuetify.theme.dark = tema.mode === 'dark';
     },
   },
 };

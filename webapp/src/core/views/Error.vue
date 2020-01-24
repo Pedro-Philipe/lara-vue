@@ -4,7 +4,7 @@
       fluid
       fill-height
     >
-      <v-layout
+      <v-row
         align-center
         justify-center
         row
@@ -29,7 +29,7 @@
             </v-btn>
           </div>
         </div>
-      </v-layout>
+      </v-row>
     </v-container>
   </v-app>
 </template>

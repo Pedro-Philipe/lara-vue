@@ -14,14 +14,14 @@
         <v-spacer />
         <v-btn
           color="green darken-1"
-          flat
+          text
           @click="response(false)"
         >
           {{ cancelText }}
         </v-btn>
         <v-btn
           color="green darken-1"
-          flat
+          text
           @click="response(true)"
         >
           {{ confirmText }}

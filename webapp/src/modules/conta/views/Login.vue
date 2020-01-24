@@ -1,18 +1,11 @@
 <template>
   <v-card class="elevation-1 pa-3 login-card">
     <v-card-text>
-      <div class="layout column align-center">
-        <h1 class="flex my-4 primary--text">
-          <router-link
-            tag="div"
-            to="/"
-            style="cursor: pointer"
-            title="Voltar para o inicio"
-          >
-            {{ appTitle }}
-          </router-link>
+      <v-row justify="center">
+        <h1 class="display-3 font-weight-thin primary--text my-11">
+          {{ appTitle }}
         </h1>
-      </div>
+      </v-row>
       <v-form
         ref="form"
         v-model="valid"
@@ -41,11 +34,18 @@
           autocomplete="current-password"
           @click:append="mostrarSenha = !mostrarSenha"
         />
-        <v-layout justify-end>
-          <router-link to="recuperar-senha">
-            Esqueceu a senha?
-          </router-link>
-        </v-layout>
+        <v-row
+          no-gutters
+        >
+          <v-col
+            align="end"
+            class="pb-4"
+          >
+            <router-link to="recuperar-senha">
+              Esqueceu a senha?
+            </router-link>
+          </v-col>
+        </v-row>
         <div class="login-btn">
           <v-btn
             type="submit"
@@ -67,10 +67,6 @@
           </v-btn>
         </div>
       </v-form>
-      <div class="text-xs-center font-weight-medium blue-grey--text mt-5">
-        Assistência ao usuário envie um e-mail para <a href="mailto:votacultura@cidadania.gov.br">votacultura@cidadania.gov.br</a>
-      </div>
-
     </v-card-text>
   </v-card>
 </template>

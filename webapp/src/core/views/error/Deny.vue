@@ -1,12 +1,12 @@
 <template>
-  <div class="exception">
+  <v-app class="exception">
     <v-container
       fluid
       fill-height
     >
-      <v-layout
-        align-center
-        justify-center
+      <v-row
+        align="center"
+        justify="center"
       >
         <div class="mr-3 hidden-sm-and-down">
           <img
@@ -28,9 +28,9 @@
             </v-btn>
           </div>
         </div>
-      </v-layout>
+      </v-row>
     </v-container>
-  </div>
+  </v-app>
 </template>
 
 <script>

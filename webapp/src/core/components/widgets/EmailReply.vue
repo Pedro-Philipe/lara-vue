@@ -7,7 +7,9 @@
       dense
       class="elevation-1"
     >
-      <v-toolbar-title>Hey Michael, How are you?</v-toolbar-title>
+      <v-toolbar-title class="font-weight-light">
+        Hey Michael, How are you?
+      </v-toolbar-title>
       <v-spacer />
       <v-btn
         icon
@@ -67,7 +69,7 @@
       fluid
       class="pa-0"
     >
-      <v-layout
+      <v-row
         wrap
         column
       >
@@ -147,7 +149,7 @@
                 class="elevation-1"
               >
                 <v-btn
-                  flat
+                  text
                   icon
                 >
                   <v-icon>send</v-icon>
@@ -166,7 +168,7 @@
             </v-card>
           </div>
         </div>
-      </v-layout>
+      </v-row>
     </v-container>
   </v-card>
 </template>

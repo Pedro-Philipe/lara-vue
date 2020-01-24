@@ -1,6 +1,6 @@
 <template>
-  <v-layout column>
-    <v-flex xs12>
+  <v-row column>
+    <v-col xs12>
       <div class="text-xs-center">
         <div style="padding: 20px">
           <h4 v-text="text" />
@@ -11,8 +11,8 @@
           color="primary"
         />
       </div>
-    </v-flex>
-  </v-layout>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
