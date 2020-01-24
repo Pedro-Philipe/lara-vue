@@ -3,11 +3,9 @@ set -e
 
 echo "[ ****************** ] Starting Endpoint of Application [ ****************** ]"
 
-echo "Back - Starting Endpoint of Application"
-if ! [ -d "./vendor" ]; then
-    echo " Install depedences whit composer..."
-    composer dumpautoload
-fi
+echo "Granting 777 access to laravel storage path"
+chmod 777 -R storage/
+
 exec "$@"
 
 set -- php-fpm

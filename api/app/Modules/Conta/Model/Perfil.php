@@ -6,10 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Perfil extends Model
 {
-    const CODIGO_AVALIADOR = 1;
-    const CODIGO_ELEITOR = 2;
-    const CODIGO_CONSELHO = 3;
-    const CODIGO_ORGANIZACAO = 4;
     const CODIGO_ADMINISTRADOR = 777;
 
     protected $table = 'tb_perfil';

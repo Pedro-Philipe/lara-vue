@@ -51,33 +51,6 @@ class Usuario extends AAutenticacao
         );
     }
 
-    public function organizacao()
-    {
-        return $this->hasOne(
-            Organizacao::class,
-            'co_usuario',
-            'co_usuario'
-        );
-    }
-
-    public function conselho()
-    {
-        return $this->hasOne(
-            Conselho::class,
-            'co_usuario',
-            'co_usuario'
-        );
-    }
-
-    public function eleitor()
-    {
-        return $this->hasOne(
-            Eleitor::class,
-            'co_usuario',
-            'co_usuario'
-        );
-    }
-
     public function setSenha($ds_senha)
     {
         $this->ds_senha = password_hash(
@@ -116,8 +89,7 @@ class Usuario extends AAutenticacao
             return false;
         }
 
-        if ($dadosUsuarioAutenticado['perfil']->co_perfil !== Perfil::CODIGO_ADMINISTRADOR
-            && $dadosUsuarioAutenticado['perfil']->co_perfil !== Perfil::CODIGO_AVALIADOR) {
+        if ($dadosUsuarioAutenticado['perfil']->co_perfil !== Perfil::CODIGO_ADMINISTRADOR) {
             return false;
         }
 

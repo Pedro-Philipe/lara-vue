@@ -24,9 +24,6 @@ class AAutenticacao extends Authenticatable implements JWTSubject
                 'nu_cpf' => $this->nu_cpf,
                 'perfil' => $this->perfil,
                 'co_usuario' => $this->co_usuario,
-                'co_eleitor' => ($this->eleitor) ? $this->eleitor->co_eleitor : null,
-                'co_conselho' => ($this->conselho) ? $this->conselho->co_conselho : null,
-                'co_organizacao' => ($this->organizacao) ? $this->organizacao->co_organizacao : null,
             ]
         ];
     }
