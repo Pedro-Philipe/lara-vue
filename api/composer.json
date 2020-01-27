@@ -15,6 +15,7 @@
         "caffeinated/modules": "^5.1",
         "darkaonline/l5-swagger": "^5.8",
         "fideloper/proxy": "^4.0",
+        "guzzlehttp/guzzle": "^6.5",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
         "mnabialek/laravel-eloquent-filter": "^0.1.1",
