@@ -11392,6 +11392,3 @@ ALTER TABLE tb_usuario
 ALTER TABLE tb_usuario
     ADD CONSTRAINT fk_usuario_perfil_coperfil
         FOREIGN KEY (co_perfil) REFERENCES tb_perfil (co_perfil);
-
-ALTER TABLE public.tb_usuario
-    ADD nu_cpf varchar(11) NULL;

@@ -82,20 +82,6 @@ class Usuario extends AAutenticacao
         return (array)$payload->get('user');
     }
 
-    public function possoFazerDownload(): bool
-    {
-        $dadosUsuarioAutenticado = auth()->user()->dadosUsuarioAutenticado();
-        if(empty($dadosUsuarioAutenticado)) {
-            return false;
-        }
-
-        if ($dadosUsuarioAutenticado['perfil']->co_perfil !== Perfil::CODIGO_ADMINISTRADOR) {
-            return false;
-        }
-
-        return true;
-    }
-
     public function souAdministrador(): bool
     {
         $dadosUsuarioAutenticado = auth()->user()->dadosUsuarioAutenticado();

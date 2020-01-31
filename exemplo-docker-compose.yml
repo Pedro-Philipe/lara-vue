@@ -2,17 +2,17 @@ version: '3.5'
 services:
   database-service:
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U paacomprainstitucional -d paacomprainstitucional || exit 1"]
+      test: ["CMD-SHELL", "pg_isready -U comprainstitucional -d comprainstitucional || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 3
     image: postgres:12
-    container_name: paacomprainstitucional-database
+    container_name: comprainstitucional-database
     environment:
-    - POSTGRES_PASSWORD=senhapaacomprainstitucional
-    - POSTGRES_USER=paacomprainstitucional
-    - POSTGRES_DB=paacomprainstitucional
-    - POSTGRES_DB_TEST=paacomprainstitucional-test
+    - POSTGRES_PASSWORD=senhacomprainstitucional
+    - POSTGRES_USER=comprainstitucional
+    - POSTGRES_DB=comprainstitucional
+    - POSTGRES_DB_TEST=comprainstitucional-test
     ports:
     - "5433:5432"
     expose:
@@ -21,11 +21,11 @@ services:
     - ./database/docker-data/postgres:/var/lib/postgresql/data
     - ./database/:/docker-entrypoint-initdb.d/
     networks:
-    - paacomprainstitucional_network
+    - comprainstitucional_network
   webapp-service:
     #    build: ./webapp
     image: node:10
-    container_name: paacomprainstitucional-web
+    container_name: comprainstitucional-web
     #user: "node"
     user: "root"
     working_dir: /home/node/app
@@ -47,12 +47,12 @@ services:
     environment:
     - NODE_ENV=development
     networks:
-    - paacomprainstitucional_network
+    - comprainstitucional_network
 
   api-service:
-    container_name: paacomprainstitucional-api
+    container_name: comprainstitucional-api
     build: ./api
-    image: cidadania/paacomprainstitucional-php-fpm:1.2.1
+    image: cidadania/comprainstitucional-php-fpm:1.2.1
     working_dir: /application
     volumes:
     - ./api:/application
@@ -66,7 +66,7 @@ services:
     # CONTAINER:ALIAS
     restart: on-failure
     networks:
-    - paacomprainstitucional_network
+    - comprainstitucional_network
 
   webserver-service:
     build:
@@ -74,8 +74,8 @@ services:
       dockerfile: WebserverDockerfile
       args:
         EXPOSE_PORT: 80
-    image: cidadania/paacomprainstitucional-webserver-nginx:1.0.0
-    container_name: paacomprainstitucional-webserver
+    image: cidadania/comprainstitucional-webserver-nginx:1.0.0
+    container_name: comprainstitucional-webserver
     working_dir: /application
     volumes:
     - ./api:/application
@@ -85,11 +85,11 @@ services:
     depends_on:
     - api-service
     networks:
-    - paacomprainstitucional_network
+    - comprainstitucional_network
 
   webapp-webserver-service:
     image: nginx:1.17
-    container_name: paacomprainstitucional-webapp-webserver
+    container_name: comprainstitucional-webapp-webserver
     #    working_dir: /usr/share/nginx/html
     volumes:
     - ./webapp/dist:/usr/share/nginx/html
@@ -99,9 +99,9 @@ services:
     links:
     - webserver-service
     networks:
-    - paacomprainstitucional_network
+    - comprainstitucional_network
 
 networks:
-  paacomprainstitucional_network:
-    name: paacomprainstitucional_network
+  comprainstitucional_network:
+    name: comprainstitucional_network
     driver: bridge

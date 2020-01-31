@@ -3,7 +3,6 @@
 namespace App\Modules\Conta\Providers;
 
 use App\Modules\Conta\Model\Usuario;
-use Caffeinated\Modules\Support\ServiceProvider;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
 

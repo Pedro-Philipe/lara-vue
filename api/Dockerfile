@@ -1,16 +1,15 @@
-FROM php:7.3-fpm
+FROM php:7.4.2-fpm
 
 WORKDIR "/application"
 
 RUN apt-get update --fix-missing \
-    && apt-get install -y apt-utils \
-    && apt-get install -y libcurl4-gnutls-dev \
-    && apt-get install -y libxml2-dev \
-    && apt-get install -y freetds-dev \
-    && apt-get install -y curl \
-    && apt-get install -y libpq-dev \
-    && apt-get install -y zip \
-    && docker-php-ext-install soap \
+    && apt install -y apt-utils \
+    && apt install -y libcurl4-gnutls-dev \
+    && apt install -y libxml2-dev \
+    && apt install -y freetds-dev \
+    && apt install -y curl \
+    && apt install -y libpq-dev \
+    && apt install -y zip \
     && docker-php-ext-install calendar \
     && docker-php-ext-configure pgsql --with-pgsql=/usr/local/pgsql \
     && docker-php-ext-configure pdo_pgsql --with-pdo-pgsql=/usr/local/pgsql \
@@ -31,4 +30,6 @@ COPY ./docker/php-fpm/docker-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 RUN chmod 777 /usr/local/bin/docker-entrypoint.sh \
-    && ln -s /usr/local/bin/docker-entrypoint.sh /
+    && ln -s /usr/local/bin/docker-entrypoint.sh / \
+    && chmod 777 -R storage/ \
+    && chmod 777 -R bootstrap/cache/

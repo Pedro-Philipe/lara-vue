@@ -3,9 +3,10 @@ set -e
 
 echo "[ ****************** ] Starting Endpoint of Application [ ****************** ]"
 
-echo "Granting 777 access to laravel storage path"
-chmod 777 -R storage/
-chmod 777 -R bootstrap/cache/
+if ! [ -d "./vendor" ]; then
+    echo " Install depedences whit composer..."
+    composer install --ignore-platform-reqs  --no-interaction --verbose --no-suggest
+fi
 
 exec "$@"
 
