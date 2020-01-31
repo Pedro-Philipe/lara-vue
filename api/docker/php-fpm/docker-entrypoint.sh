@@ -8,6 +8,10 @@ if ! [ -d "./vendor" ]; then
     composer install --ignore-platform-reqs  --no-interaction --verbose --no-suggest
 fi
 
+echo "Granting 777 access to laravel storage and cache paths"
+chmod 777 -R storage/
+chmod 777 -R bootstrap/cache/
+
 exec "$@"
 
 set -- php-fpm
